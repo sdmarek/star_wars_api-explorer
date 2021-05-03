@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{% if buttons %}
+		<a href='?{{ load }}'>{{ collection.name }}.csv</a>
+	{% else %}
+		{{ collection.name }}.csv
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% for label, link in buttons.items %}
+		{% if link.1 %}
+			<a role='button' class='btn btn-outline-secondary mt-3' href='?{{ link.0 }}'>{{ label }}</a>
+		{% else %}
+			<a role='button' class='btn btn-outline-primary mt-3' href='?{{ link.0 }}'>{{ label }}</a>
+		{% endif %}
+	{% endfor %}
+	<h5>&nbsp;</h5>
+	<table class='table table-striped'>
+		<thead>
+		<tr>
+			{% for label, link in header.items %}
+				<th scope='col'>
+					{% if link %}
+						<a href='?{{ link }}'>{{ label }}</a>
+					{% else %}
+						{{ label }}
+					{% endif %}
+				</th>
+			{% endfor %}
+		</tr>
+		</thead>
+		<tbody>
+		{% for row in rows %}
+			<tr>
+				{% for value in row %}
+					<td>{{ value }}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<form method='post' class='d-inline-block'>{% csrf_token %}
+		{% if load_more %}
+			<a role='button' class='btn btn-outline-primary mt-3' href='?{{ load_more }}'>Load More</a>
+		{% endif %}
+	</form>
+{% endblock %}

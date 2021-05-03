@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head  %}
+	{% with collection_list|first as newest %}
+		{% if newest.fetching_status == 1 and newest.age <= PAUSE_BEFORE_START_NEW_FETCH %}
+			{% if newest.age < 10 %}
+				<meta http-equiv='refresh' content='{{ newest.age }}' />
+			{% else %}
+				<meta http-equiv='refresh' content='10' />
+			{% endif %}
+		{% endif %}
+	{% endwith %}
+{% endblock %}
+
+{% block title %}
+	Collections
+	<form method='post' class='d-inline-block'>{% csrf_token %}
+		{% with collection_list|first as newest %}
+			{% if newest.fetching_status == 1 and newest.age <= PAUSE_BEFORE_START_NEW_FETCH %}
+				<button type='submit' class='btn btn-success' disabled='1'>Fetch</button>
+			{% else %}
+				<button type='submit' class='btn btn-success'>Fetch</button>
+			{% endif %}
+		{% endwith %}
+	</form>
+{% endblock %}
+
+{% block content %}
+<ul class='list-group'>
+	{% for collection in collection_list %}
+		<li class='list-group-item'>
+			{% if collection.fetching_status == 2 %}
+				<a href='{% url "collection-detail" pk=collection.pk %}'>
+					{{ collection.created }} — Fetching {{ collection.get_fetching_status_display }}
+				</a>
+			{% else %}
+				{{ collection.created }} — Fetching {{ collection.get_fetching_status_display }}
+			{% endif %}
+		</li>
+	{% endfor %}
+</ul>
+{% endblock %}

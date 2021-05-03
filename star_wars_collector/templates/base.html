@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset='utf-8' />
+	{% block head %}
+	{% endblock %}
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css'
+		integrity='sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l' crossorigin='anonymous' />
+	<title>Star Wars Explorer</title>
+</head>
+<body>
+
+<nav class='navbar'>
+	<div class='container-fluid bg-warning mx-3'>
+		<div class='navbar-brand mx-1 py-2'>
+			<b>Star Wars</b> Explorer
+			<span class='px-5'><sup><a href='{% url "collection-list" %}'>Collections</a></sup></span>
+		</div>
+	</div>
+</nav>
+
+<div class='mx-5'>
+	<div class='mt-5'>
+		<h2>
+			{% block title %}
+			{% endblock %}
+		</h2>
+	</div>
+	{% block content %}
+	{% endblock %}
+</div>
+
+</body>
+</html>
