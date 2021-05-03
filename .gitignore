@@ -1,9 +1,10 @@
 *~
+.env
+.ipython
+.venv
 *.pyc
 *.swp
 *.swo
 *.iml
-data/
-.ipython
 *.orig
-.venv
+data/

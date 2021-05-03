@@ -8,6 +8,7 @@
 	python3 -m venv .venv
 	. .venv/bin/activate
 	pip install -r requirements.txt
+	echo SECRET_KEY=YOUR-SECRET-KEY > .env
 	./manage.py migrate
 	uvicorn star_wars_explorer.asgi:application
 	curl http://127.0.0.1:8000/
